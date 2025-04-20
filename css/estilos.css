@@ -428,10 +428,7 @@ nav a:hover::after {
     flex-direction: column;
     gap: 30px;
     /* 2 columnas en desktop */
-    /*
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 
 
     }
@@ -525,7 +522,13 @@ nav a:hover::after {
     }
     
 
+
+
     @media (max-width: 480px) {
+
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
         .service-icon {
             display: block;
             text-align: center;
