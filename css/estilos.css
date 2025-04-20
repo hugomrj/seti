@@ -291,6 +291,14 @@ nav a:hover::after {
 } 
 
 
+/* Reducción para pantallas pequeñas (<480px) */
+@media (max-width: 480px) {
+    .code-animation {
+        display: none;
+    }    
+
+  }
+
 
 
 
@@ -300,6 +308,8 @@ nav a:hover::after {
     position: absolute;
     opacity: 0.1;
 }
+
+
 
 .shape-1 {
     top: 10%;
@@ -311,9 +321,11 @@ nav a:hover::after {
     animation: float 10s ease-in-out infinite;
 }
 
+
+
 .shape-2 {
-    bottom: 20%;
-    right: 10%;
+    bottom: 40%;
+    right: 80%;
     width: 150px;
     height: 150px;
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
@@ -322,7 +334,7 @@ nav a:hover::after {
 }
 
 .shape-3 {
-    top: 60%;
+    top: 80%;
     left: 20%;
     width: 100px;
     height: 100px;
@@ -906,6 +918,15 @@ footer {
 
 
 
+@media (max-width: 480px) {
+    .section {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+
+
 
 /* Estilo de los iconos dentro de los botones */
 .contact-icon i {
@@ -1020,6 +1041,7 @@ section.asistente {
     flex-wrap: wrap;
     gap: 3rem;
     width: 100%; /* Asegura que el chat use todo el espacio disponible */
+
 }
 
 
@@ -1127,3 +1149,20 @@ section.asistente {
     align-self: flex-end;
     color: #000;
 }
+
+
+/* Estilos para pantallas pequeñas (≤ 480px) */
+@media (max-width: 480px) {
+    .chat-window {
+        padding: 0.5rem; /* Padding reducido en móviles */
+    }
+}
+
+
+/* Cambia a 250px SOLO cuando la pantalla ≤ 350px */
+@media (max-width: 350px) {
+    .chatbot-container {
+        width: 250px; 
+    }
+}
+
