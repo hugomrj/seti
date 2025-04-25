@@ -566,21 +566,23 @@ nav a:hover::after {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
+    align-items: stretch; /* <-- hace que los hijos (items) tengan mismo alto */
 }
 
 .portfolio-item {
     border-radius: 10px;
-    /* box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Opcional: puedes mantener la sombra */
-    padding: 2rem; /* Añadimos padding interno */
-    background-color: white; /* Fondo blanco para los items */
-    text-align: left; /* Alineación del texto */
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición suave */
-    border: 1px solid #ddd; /* Borde sutil */
-    display: flex; /* Para alinear contenido verticalmente si es necesario */
+    padding: 2rem;
+    background-color: white;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    border: 1px solid #ddd;
+
+    display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra contenido verticalmente si el padding es suficiente */
-    min-height: 180px; /* Altura mínima para que se vean consistentes */
+    justify-content: space-between; /* <--- esto es clave */
+    height: 100%; /* <--- fuerza que ocupe todo el alto disponible */
 }
+
 
 /* --- Hover Effect --- */
 .portfolio-item:hover {
