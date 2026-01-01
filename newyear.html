@@ -51,7 +51,6 @@ section::before{
 
 h1,h2{
   font-size:4rem;
-  text-transform:uppercase;
   letter-spacing:5px;
   text-shadow:0 0 30px rgba(255,215,0,.8);
   animation:glow 1.5s ease forwards;
@@ -106,7 +105,28 @@ p{
   to{transform:scale(30);opacity:0}
 }
 
-/* FINAL */
+/* Scroll hint */
+.scroll-hint{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#fff;
+  font-size:1.1rem;
+  letter-spacing:2px;
+  opacity:0;
+  animation:hint 2s ease-in-out infinite;
+  text-shadow:0 0 15px gold;
+  z-index:1000;
+}
+
+@keyframes hint{
+  0%{opacity:0; transform:translate(-50%,10px)}
+  50%{opacity:1; transform:translate(-50%,0)}
+  100%{opacity:0; transform:translate(-50%,-10px)}
+}
+
+/* Final */
 #final h2{
   font-size:4.5rem;
   color:#fff;
@@ -125,7 +145,6 @@ p{
   to{transform:scale(1);opacity:1}
 }
 
-/* Flash final */
 .flash{
   position:fixed;
   inset:0;
@@ -142,6 +161,8 @@ p{
 </style>
 </head>
 <body>
+
+<div class="scroll-hint">Desliza hacia abajo ↓</div>
 
 <div class="container">
 
@@ -190,7 +211,7 @@ setInterval(()=>{
   setTimeout(()=>f.remove(),1500);
 },1800);
 
-// Scroll
+// Scroll control
 let lock=false;
 document.querySelector('.container').addEventListener('wheel',e=>{
   e.preventDefault();
@@ -205,7 +226,7 @@ document.querySelector('.container').addEventListener('wheel',e=>{
   setTimeout(()=>lock=false,900);
 },{passive:false});
 
-// Cuenta regresiva final
+// Cuenta regresiva
 let fired=false;
 const obs=new IntersectionObserver(e=>{
   if(e[0].isIntersecting && !fired){
