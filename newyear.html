@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienvenido 2026</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  height:100%;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+  background:#02010f;
+}
+
+.container{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+}
+
+section{
+  height:100vh;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  color:#ffd966;
+  overflow:hidden;
+}
+
+section::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg,#12003a,#3a0f5c,#000);
+  animation:bgMove 8s infinite alternate;
+  z-index:-1;
+}
+
+@keyframes bgMove{
+  from{filter:hue-rotate(0deg)}
+  to{filter:hue-rotate(60deg)}
+}
+
+h1,h2{
+  font-size:4rem;
+  text-transform:uppercase;
+  letter-spacing:5px;
+  text-shadow:0 0 30px rgba(255,215,0,.8);
+  animation:glow 1.5s ease forwards;
+}
+
+p{
+  font-size:1.6rem;
+  margin-top:20px;
+  color:#fff;
+  opacity:0;
+  animation:fadeUp 1.2s ease forwards .4s;
+}
+
+@keyframes glow{
+  from{opacity:0;transform:scale(.8)}
+  to{opacity:1;transform:scale(1)}
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Partículas */
+.particle{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:#fff;
+  border-radius:50%;
+  animation:float 7s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
+}
+
+/* Fuegos */
+.firework{
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:white;
+  border-radius:50%;
+  animation:boom 1.5s ease-out forwards;
+  box-shadow:0 0 50px 25px rgba(255,215,0,.9);
+}
+
+@keyframes boom{
+  from{transform:scale(0);opacity:1}
+  to{transform:scale(30);opacity:0}
+}
+
+/* FINAL */
+#final h2{
+  font-size:4.5rem;
+  color:#fff;
+  text-shadow:0 0 40px gold;
+}
+
+#countdown{
+  font-size:6rem;
+  margin-top:40px;
+  color:gold;
+  animation:zoom 1s ease forwards;
+}
+
+@keyframes zoom{
+  from{transform:scale(0);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* Flash final */
+.flash{
+  position:fixed;
+  inset:0;
+  background:white;
+  animation:flash 1s ease forwards;
+  z-index:999;
+}
+
+@keyframes flash{
+  0%{opacity:0}
+  40%{opacity:1}
+  100%{opacity:0}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<section>
+  <h1>2026</h1>
+  <p>Un nuevo comienzo lleno de luz</p>
+</section>
+
+<section>
+  <h2>Deja atrás el miedo</h2>
+  <p>Este año es para avanzar sin mirar atrás</p>
+</section>
+
+<section>
+  <h2>Confía en ti</h2>
+  <p>Todo lo grande empieza con una decisión</p>
+</section>
+
+<section id="final">
+  <h2>Bienvenido 2026</h2>
+  <p>Hoy empieza tu mejor versión</p>
+  <div id="countdown">3</div>
+</section>
+
+</div>
+
+<script>
+// Partículas
+document.querySelectorAll('section').forEach(sec=>{
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDelay=Math.random()*6+'s';
+    sec.appendChild(p);
+  }
+});
+
+// Fuegos
+setInterval(()=>{
+  const f=document.createElement('div');
+  f.className='firework';
+  f.style.left=Math.random()*100+'%';
+  f.style.top=Math.random()*60+'%';
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1500);
+},1800);
+
+// Scroll
+let lock=false;
+document.querySelector('.container').addEventListener('wheel',e=>{
+  e.preventDefault();
+  if(lock) return;
+  lock=true;
+
+  const secs=[...document.querySelectorAll('section')];
+  let i=secs.findIndex(s=>s.getBoundingClientRect().top===0);
+  i+=e.deltaY>0?1:-1;
+  i=Math.max(0,Math.min(i,secs.length-1));
+  secs[i].scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>lock=false,900);
+},{passive:false});
+
+// Cuenta regresiva final
+let fired=false;
+const obs=new IntersectionObserver(e=>{
+  if(e[0].isIntersecting && !fired){
+    fired=true;
+    let c=3;
+    const el=document.getElementById('countdown');
+    const i=setInterval(()=>{
+      c--;
+      el.textContent=c>0?c:"¡FELIZ 2026!";
+      if(c===0){
+        clearInterval(i);
+        const f=document.createElement('div');
+        f.className='flash';
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1000);
+      }
+    },1000);
+  }
+});
+obs.observe(document.getElementById('final'));
+</script>
+
+</body>
+</html>
